@@ -1,7 +1,5 @@
-// СДВИНУТЬ ВСЁ ПО КООРДИНАТЕ ИКС, ЧТОБ БЫЛО РОВНО
 int x, y;
 int deg = 10;
-float coefficientCos, coefficientSin; 
 Wheel bigWheel = new Wheel(400, 345, 345);
 Wheel smallWheel = new Wheel(100, 120, 495);
 Frame frameUp = new Frame(345, 345, 450, 450, PI-PI/12, TWO_PI-PI/2);
@@ -16,8 +14,8 @@ void setup()
   strokeWeight(3);
   frameRate(60);
 
-  x = width/2;
-  y = height/2;  
+  x = 0;
+  y = 0; 
 
   frameUp.showFrame();
   frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
@@ -55,6 +53,43 @@ void mousePressed()
 	frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
 }
 
+void keyPressed()
+{
+	// В 2D-режиме камера недоступна, так что приходится делать ручками
+	if (keyCode == UP) 
+	{
+		y += 50;
+    }
+
+	if (keyCode == DOWN) 
+	{
+		y -= 50;
+    } 
+
+    if (keyCode == LEFT) 
+	{
+		x -= 50;
+    }
+
+    if (keyCode == RIGHT) 
+	{
+		x += 50;
+    }     
+    translate(x, y); 
+    fill(#a5e2f4);
+    noStroke();
+    rect(-x, -y, 550, 550);
+    stroke(0);
+    x = 0;
+  	y = 0;
+    frameUp.showFrame();
+  	frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
+  	bigWheel.showWheel();
+  	smallWheel.showWheel();
+  	helm.showHelm();
+  	saddle.showSaddle();  	
+}
+
 class Saddle
 {
 	float attachingPointX, attachingPointY;
@@ -72,11 +107,7 @@ class Saddle
 
 	void showSaddle()
 	{
-		//200, 170, 50, 50
-		//Седло, которое тоже без класса, а надо бы
   		line(attachingPointX, attachingPointY, attachingPointX, topPointY);	
-  		// 85 width, 20 - height
-  		// 110
   		ellipse(attachingPointX, topPointY - height1 / 4, width1, height1);
   		ellipse(attachingPointX - width1 / 3, topPointY - height1 / 2, width1 * 0.7, height1 * 1.4); 
 	}
@@ -132,7 +163,6 @@ class Wheel
   		line(0, 0, -diameter / 2, 0);
   		line(0, 0, 0, diameter / 2);
   		line(0, 0, 0, -diameter / 2);
-  		//line(0, 0, 0, -diameter / 2);
   		popMatrix();	
   		degrees += 10;
     }  	
@@ -157,7 +187,6 @@ class Wheel
   		line(0, 0, -diameter / 2, 0);
   		line(0, 0, 0, diameter / 2);
   		line(0, 0, 0, -diameter / 2);
-  		//line(0, 0, 0, -diameter / 2);
   		popMatrix();	
   		degrees += 10;
     }
