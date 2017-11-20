@@ -9,7 +9,7 @@ Saddle saddle = new Saddle(200, 170, 70, 50, 20);
 // Setup the Processing Canvas
 void setup()
 {
-  size(550, 550);
+  size(560, 560);
   background(#a5e2f4);
   strokeWeight(3);
   frameRate(60);
@@ -17,12 +17,13 @@ void setup()
   x = 0;
   y = 0; 
 
-  frameUp.showFrame();
-  frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
+  // TODO: REFACTOR THIS WITH BICYCLE CLASS
+  frameUp.showFrame();  	
   bigWheel.showWheel();
   smallWheel.showWheel();
+  frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
   helm.showHelm();
-  saddle.showSaddle();
+  saddle.showSaddle();  	
 }
 
 // Main draw loop
@@ -56,36 +57,41 @@ void mousePressed()
 void keyPressed()
 {
 	// В 2D-режиме камера недоступна, так что приходится делать ручками
+
+	int step = 50;
+
 	if (keyCode == UP) 
 	{
-		y += 50;
+		y += step;
     }
 
 	if (keyCode == DOWN) 
 	{
-		y -= 50;
+		y -= step;
     } 
 
     if (keyCode == LEFT) 
 	{
-		x -= 50;
+		x -= step;
     }
 
     if (keyCode == RIGHT) 
 	{
-		x += 50;
+		x += step;
     }     
     translate(x, y); 
     fill(#a5e2f4);
     noStroke();
-    rect(-x, -y, 550, 550);
+    rect(-x, -y, 560, 560);
     stroke(0);
+    
     x = 0;
   	y = 0;
-    frameUp.showFrame();
-  	frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
+
+    frameUp.showFrame();  	
   	bigWheel.showWheel();
   	smallWheel.showWheel();
+  	frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
   	helm.showHelm();
   	saddle.showSaddle();  	
 }
@@ -107,8 +113,10 @@ class Saddle
 
 	void showSaddle()
 	{
-  		line(attachingPointX, attachingPointY, attachingPointX, topPointY);	
+  		line(attachingPointX, attachingPointY, attachingPointX, topPointY);  			
+  		fill(#B7410E);
   		ellipse(attachingPointX, topPointY - height1 / 4, width1, height1);
+  		fill(#B7410E);
   		ellipse(attachingPointX - width1 / 3, topPointY - height1 / 2, width1 * 0.7, height1 * 1.4); 
 	}
 }
@@ -150,6 +158,9 @@ class Wheel
 
   void showWheel()
   {
+  	fill(#292929);
+  	ellipse(centerX, centerY, diameter + 10, diameter + 10);
+  	fill(#a5e2f4);
     ellipse(centerX, centerY, diameter, diameter);
    	degrees = 10;
 	
