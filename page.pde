@@ -1,5 +1,6 @@
 int x, y;
 int deg = 10;
+boolean rotateWheel = false;
 Wheel bigWheel = new Wheel(400, 345, 345);
 Wheel smallWheel = new Wheel(100, 120, 495);
 Frame frameUp = new Frame(345, 345, 450, 450, PI-PI/12, TWO_PI-PI/2);
@@ -29,7 +30,24 @@ void setup()
 // Main draw loop
 void draw()
 {  
-  
+ 	if(rotateWheel)
+ 	{
+ 		for (int i = 0; i < 36; i++)
+		{
+			bigWheel.rotateWheel(deg);
+			deg += 5;
+		}			
+	
+		for (int i = 0; i < 36; i++)
+		{
+			smallWheel.rotateWheel(deg);
+			deg += 5;
+		}
+
+		deg += 5;
+
+		frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
+ 	} 
 }
 
 
@@ -37,21 +55,7 @@ void draw()
 // TODO: IF RIGHT - GEG PLUS, ELSE DEG MINUS
 void mousePressed()
 {
-	for (int i = 0; i < 36; i++)
-	{
-		bigWheel.rotateWheel(deg);
-		deg += 5;
-	}			
-	
-	for (int i = 0; i < 36; i++)
-	{
-		smallWheel.rotateWheel(deg);
-		deg += 5;
-	}
-
-	deg += 5;
-
-	frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
+	rotateWheel = !rotateWheel;	
 }
 
 void keyPressed()
