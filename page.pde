@@ -1,5 +1,7 @@
 int x, y;
 int deg = 10;
+int matrixDeg = 0;
+int a = 1;
 boolean rotateWheel = false;
 Wheel bigWheel = new Wheel(400, 345, 345);
 Wheel smallWheel = new Wheel(100, 120, 495);
@@ -44,21 +46,93 @@ void draw()
 			deg += 5;
 		}
 
-		deg += 5;
+		deg += 2;
 
 		frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
  	} 
 }
 
-
-// TODO: FULL CYCLE
-// TODO: IF RIGHT - GEG PLUS, ELSE DEG MINUS
 void mousePressed()
 {
 	rotateWheel = !rotateWheel;	
 }
 
 void keyPressed()
+{
+ 	if((keyCode == UP) || (keyCode == DOWN) || (keyCode == LEFT) || (keyCode == RIGHT))
+ 	{
+ 		moveBicycle();
+ 	}
+
+ 	if((keyCode == ENTER) || (keyCode == ALT))
+ 	{
+ 		rotateBicycle();
+ 	}
+
+ 	if ((keyCode == CONTROL) || (keyCode == SHIFT))
+ 	{
+ 		changeBicycleSize();
+ 	}
+}
+
+void changeBicycleSize()
+{
+	if (keyCode == CONTROL)
+	{
+		if(a > 0)
+		{
+			a -= 0.1;
+		}
+		
+	}
+
+	if (keyCode == SHIFT)
+	{
+		a += 0.1;
+	}
+
+	fill(#a5e2f4);
+    noStroke();
+    rect(0, 0, 560, 560);
+    stroke(0);
+
+    scale(a);
+
+    frameUp.showFrame();  	
+  	bigWheel.showWheel();
+  	smallWheel.showWheel();
+  	frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
+  	helm.showHelm();
+  	saddle.showSaddle();  
+}
+
+void rotateBicycle()
+{
+	if (keyCode == ENTER)
+	{
+		matrixDeg += 5;
+	}
+	if (keyCode == ALT)
+	{
+		matrixDeg -= 5;
+	}
+	
+	fill(#a5e2f4);
+    noStroke();
+    rect(0, 0, 560, 560);
+    stroke(0);
+
+	rotate(matrixDeg);
+
+	frameUp.showFrame();  	
+  	bigWheel.showWheel();
+  	smallWheel.showWheel();
+  	frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
+  	helm.showHelm();
+  	saddle.showSaddle();  
+}
+
+void moveBicycle()
 {
 	// В 2D-режиме камера недоступна, так что приходится делать ручками
 
@@ -82,12 +156,13 @@ void keyPressed()
     if (keyCode == RIGHT) 
 	{
 		x += step;
-    }     
-    translate(x, y); 
+    }  
     fill(#a5e2f4);
     noStroke();
     rect(-x, -y, 560, 560);
     stroke(0);
+
+    translate(x, y);    
     
     x = 0;
   	y = 0;
@@ -97,7 +172,7 @@ void keyPressed()
   	smallWheel.showWheel();
   	frameUp.attachToWheels(bigWheel.centerX, bigWheel.centerY, smallWheel.centerX, smallWheel.centerY, bigWheel.diameter, smallWheel.diameter);
   	helm.showHelm();
-  	saddle.showSaddle();  	
+  	saddle.showSaddle(); 
 }
 
 class Saddle
