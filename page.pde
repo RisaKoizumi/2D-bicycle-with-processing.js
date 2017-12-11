@@ -123,6 +123,7 @@ void rotateBicycle()
     stroke(0);
 
 	rotate(matrixDeg);
+	matrixDeg = 0;
 
 	frameUp.showFrame();  	
   	bigWheel.showWheel();
@@ -140,12 +141,12 @@ void moveBicycle()
 
 	if (keyCode == UP) 
 	{
-		y += step;
+		y -= step;
     }
 
 	if (keyCode == DOWN) 
 	{
-		y -= step;
+		y += step;
     } 
 
     if (keyCode == LEFT) 
@@ -159,7 +160,7 @@ void moveBicycle()
     }  
     fill(#a5e2f4);
     noStroke();
-    rect(-x, -y, 560, 560);
+    rect(-x, -y, 700, 700);
     stroke(0);
 
     translate(x, y);    
